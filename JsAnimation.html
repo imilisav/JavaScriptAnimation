@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Animation Demo</title>
+    <style>
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        background-color: grey;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      h1, p {
+        text-align: center;
+        font-family: helvetica;
+        font-weight: lighter;
+        color: white;
+        margin: 20px auto 0;
+      }
+
+      canvas {
+        margin: 40px 0 0;
+        background-color: white;
+      }
+    </style>
+  </head>
+
+  <body onload="init()">
+    <h1>Animation Demo</h1>
+    <p>Produced By: Ilija Milisav</p>
+
+    <canvas id = "canvas" height="450" width="450" >
+      Unfortunately, your browser does not support canvas.
+    </canvas>
+
+    <script>
+    var canvas;
+    var ctx;
+    var dx = 10;
+    var dy = 10;
+    var x = generateRandom();
+    var y = generateRandom();
+
+    function generateRandom() {
+      number = Math.floor(Math.random() * 430 + 20);
+      return number;
+    }
+
+    function circle(x,y,r) {
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI*2, true);
+      ctx.fill();
+    }
+
+    function rect(x,y,w,h) {
+      ctx.beginPath();
+      ctx.rect(x,y,w,h);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+    }
+
+    function clear() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function init() {
+      canvas = document.getElementById("canvas");
+      ctx = canvas.getContext("2d");
+      return setInterval(draw, 10);
+    }
+
+    function doKeyDown(evt){
+      switch (evt.keyCode) {
+        case 38:  /* Up arrow was pressed */
+        if (y - dy > 0){
+          y -= dy;
+        }
+        break;
+      case 40:  /* Down arrow was pressed */
+        if (y + dy < canvas.height){
+          y += dy;
+        }
+        break;
+      case 37:  /* Left arrow was pressed */
+        if (x - dx > 0){
+          x -= dx;
+        }
+        break;
+      case 39:  /* Right arrow was pressed */
+        if (x + dx < canvas.width){
+          x += dx;
+        }
+        break;
+      }
+    }
+
+    function draw() {
+      clear();
+      ctx.fillStyle = "white";
+      ctx.strokeStyle = "White";
+      rect(0,0,canvas.width,canvas.height);
+      ctx.fillStyle = "blue";
+      circle(x, y, 10);
+    }
+
+    init();
+      window.addEventListener('keydown',doKeyDown,true);
+    </script>
+
+    <p>As you can see, there is a blue ball in the middle of the white square. You can move the ball around in the white square using the arrow keys.</p>
+  </body>
+</html>
